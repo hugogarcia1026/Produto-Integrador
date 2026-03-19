@@ -18,3 +18,30 @@ BEGIN
 END
 // DELIMITER ;
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DROP FUNCTION IF EXISTS tempo_medio_volta;
+DELIMITER //
+CREATE FUNCTION  tempo_medio_volta(
+	_id_equipe INT,
+	_id_corrida INT
+)
+
+RETURNS TIME
+READS SQL DATA 
+BEGIN
+DECLARE media TIME;
+
+SET media = (
+		SELECT  AVG(tempo_volta)
+		FROM dados_corridas
+		WHERE id_corrida = _id_corrida
+		AND id_equipe = _id_equipe
+	);
+    
+    RETURN media;
+    END
+
+// DELIMITER ;
+
+SELECT tempo_medio_volta(1, 1);
